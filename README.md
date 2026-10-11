@@ -113,11 +113,11 @@ Koneksi ke database dibuat oleh class `Database` di package `util`. Class ini me
 
 ![Class Database](/aset/database.png)
 
-Semua data pengajuan disimpan dalam satu tabel bernama `pengajuan` di database `cominfo`. Kolomnya `id_pengajuan`, `nama_pemohon`, `departemen`, `kategori`, `catatan`, `deadline`, dan `status`, ditambah kolom khusus Digital (`target_platform`, `format_file`) dan kolom khusus Cetak (`ukuran_media`, `jumlah_cetak`). Kolom `kategori` berisi `Digital` atau `Cetak`, dan nilainya menentukan object mana yang dibuat saat data dibaca.
+Database yang dipakai bernama `cominfo`, dan semua data pengajuan disimpan dalam satu tabel bernama `pengajuan`. Kolomnya `id_pengajuan` (primary key), `nama_pemohon`, `departemen`, `kategori`, `catatan`, `deadline`, dan `status` (default `Diterima`), ditambah kolom khusus Digital (`target_platform`, `format_file`) dan kolom khusus Cetak (`ukuran_media`, `jumlah_cetak`). Kolom `kategori` bertipe `ENUM` yang hanya menerima `Digital` atau `Cetak`, dan nilainya menentukan object mana yang dibuat saat data dibaca.
 
-Data awal diisi lewat file `.sql` yang berisi perintah `INSERT`, tidak lewat kode Java. File itu tinggal di-import ke MySQL, jadi saat menu Tampilkan dijalankan pertama kali, data langsung tampil dari database.
+Data awal diisi lewat perintah `INSERT` di file `.sql`, tidak lewat kode Java. Ada 2 data: pengajuan Digital atas nama Yahya Jailani (Biro EDEN, Poster INSTAND untuk Instagram Feed, format PNG) dan pengajuan Cetak atas nama Ahmad Ahdasuki (Departemen PSD, Sertifikat ISC, A4 Hardpaper sebanyak 50 pcs). Karena sudah ada di database, kedua data ini langsung tampil saat menu Tampilkan dijalankan pertama kali.
 
-![Hasil SELECT data awal](/aset/select-database.png)
+![Pembuatan database, tabel, dan data awal](/aset/sql-database.png)
 
 Untuk pola DAO, interface `PengajuanDAO` mendefinisikan 7 operasi: `tambahDigital()`, `tambahCetak()`, `getSemua()`, `getById()`, `updateRevisi()`, `updateRevisiDanStatus()`, dan `hapus()`. Class `PengajuanDAOImpl` mengimplementasikan semuanya dengan query SQL. Controller hanya memegang variabel bertipe `PengajuanDAO`, jadi tidak perlu tahu cara data disimpan, dan view tidak menyentuh database sama sekali.
 
